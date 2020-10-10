@@ -1,26 +1,19 @@
-import { Observable, Subject } from "rxjs";
+import { of } from "rxjs";
+
 import constants from "./constants";
+import SubjectMixinAC from "./SubjectMixinAC";
 
-class Computer {
-  #cpu;
-
+class Computer extends SubjectMixinAC {
   constructor(name) {
+    super(of());
     this.name = name;
     this.numberOfTasksInQueue = 0;
-    this.#cpu = new Subject();
-  }
-
-  getCpu() {
-    return this.#cpu;
   }
 
   executeTask(task) {
-    this.#cpu.next(task);
+    this.numberOfTasksInQueue += 1;
+    this.multicasted$.next({ task: task, time: constants.timeToExecute[task] });
   }
-
-  getComputingTime(task) {
-    return constants.timeToExecute[task];
-  }
-
-  execute;
 }
+
+export default Computer;

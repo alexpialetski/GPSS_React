@@ -1,30 +1,19 @@
-import { Subject, merge } from "rxjs";
-import { multicast, refCount } from "rxjs/operators";
+import { merge } from "rxjs";
 
-// import ObservableClass from "./ObservableClass";
-import Computer from "./Computer";
 import TaskDistributor from "./TaskDistributor";
-import constants from "./constants";
+import SubjectMixinAC from "./SubjectMixinAC";
 
-class CalculatingMachine {
-  #subject;
-  #machine;
+class CalculatingMachine extends SubjectMixinAC {
   #computers;
   #taskDistributor;
 
-  constructor() {
-    this.#subject = new Subject();
+  constructor(computers) {
+    const observable$ = merge(computers);
 
-    this.#computers = [
-      new Computer(constants.entities.computer1),
-      new Computer(constants.entities.computer2),
-    ];
-    this.#taskDistributor = new TaskDistributor(this.#computers);
+    super(observable$);
 
-    /////////////////////////////////////////////////////////////
-
-    const executionFlow$ = merge(this.#computers);
-    this.#machine = executionFlow$.pipe(multicast(this.#subject), refCount());
+    this.#computers = computers;
+    this.#taskDistributor = new TaskDistributor(computers);
   }
 
   executeTask(task) {
