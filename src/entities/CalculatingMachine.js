@@ -8,7 +8,8 @@ class CalculatingMachine extends SubjectMixinAC {
   #taskDistributor;
 
   constructor(computers) {
-    const observable$ = merge(computers);
+    const compCpus = computers.map((comp) => comp.multicasted$);
+    const observable$ = merge(compCpus);
 
     super(observable$);
 

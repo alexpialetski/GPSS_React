@@ -2,7 +2,7 @@ import { interval } from "rxjs";
 import { mapTo } from "rxjs/operators";
 
 import SubjectMixinAC from "./SubjectMixinAC";
-import { generateTask } from "./utils";
+import { generateTask } from "../utils";
 
 class Generator extends SubjectMixinAC {
   constructor() {

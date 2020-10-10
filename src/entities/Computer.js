@@ -1,6 +1,6 @@
 import { of } from "rxjs";
 
-import constants from "./constants";
+import constants from "../constants";
 import SubjectMixinAC from "./SubjectMixinAC";
 
 class Computer extends SubjectMixinAC {

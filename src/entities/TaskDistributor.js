@@ -6,8 +6,8 @@ class TaskDistributor {
   }
 
   distributeTask(task) {
-    let minQueue = 0;
-    let computer;
+    let minQueue = this.#computers[0].numberOfTasksInQueue;
+    let computer = this.#computers[0];
     this.#computers.forEach((comp) => {
       if (comp.numberOfTasksInQueue < minQueue) {
         minQueue = comp.numberOfTasksInQueue;
