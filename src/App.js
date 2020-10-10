@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import constants from "./constants";
+import Generator from "./Generator";
+import TaskDistributor from "./TaskDistributor";
+import { getExponentialValue, getGaussValue } from "./utils";
+
+import "./App.css";
+
+const generator = new Generator();
+
+const App = () => {
+  const [val, setVal] = useState();
+
+  useEffect(() => {
+    generator.subscribe((x) => {
+      setVal(x);
+    });
+    // comp1.subscribe((v) => console.log(`observerA: ${v}`));
+    // comp2.subscribe((v) => console.log(`observerB: ${v}`));
+    // const subscription = taskGenerator$.subscribe((x) => {
+    //   setVal(x);
+    // });
+
+    return () => {
+      generator.unsubscribeAll();
+    };
+  }, []);
+
+  return <div>{val}</div>;
+};
 
 export default App;
